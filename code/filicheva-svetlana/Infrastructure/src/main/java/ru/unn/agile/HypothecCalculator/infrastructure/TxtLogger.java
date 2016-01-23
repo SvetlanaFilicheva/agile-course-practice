@@ -13,27 +13,27 @@ import java.util.Locale;
 
 public class TxtLogger implements ILogger {
     private final FileWriter writer;
-    private final BufferedReader reader;
+    private final String filename;
     private static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
 
     public TxtLogger(final String filename) {
+        this.filename = filename;
+
         FileWriter fileWriter = null;
-        BufferedReader fileReader = null;
         try {
             fileWriter = new FileWriter(filename);
-            fileReader = new BufferedReader(new FileReader(filename));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         writer = fileWriter;
-        reader = fileReader;
     }
 
     @Override
     public List<String> getLog() {
         ArrayList<String> log = new ArrayList<String>();
         try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
             String logLine = reader.readLine();
 
             while (logLine != null) {
